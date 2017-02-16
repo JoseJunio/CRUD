@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../resources/main.xhtml">
+
+    <ui:define name="tarefas">
+        <p:fieldset legend="Contato">
+            <p:tabView id="tbv1" dynamic="true" cache="true">
+                <p:tab title="Cadastar Leilão">
+                    <h:form prependId="false" id="formContato">
+                        <p:growl id="msg0"/>
+                        <h:panelGrid columns="1" cellpadding="10" styleClass="panelGrid" id="grid0">
+                            <h:outputLabel for="idCliente" value="Cliente:"/>
+                            <p:inputText id="idCliente" size="40" value="#{contato.contato.idCliente}"
+                                         onkeyup="this.value = this.value.toUpperCase()" required="true"
+                                         requiredMessage="O campo [Nome] é obrigatório."/>
+                            <h:outputLabel for="sequencia" value="Sequencia:"/>
+                            <p:inputText id="sequencia" size="40" value="#{contato.contato.sequencia}"
+                                         onkeyup="this.value = this.value.toUpperCase()" required="true"
+                                         requiredMessage="O campo [Nome] é obrigatório."/>
+							<h:outputLabel for="nome" value="Nome:"/>
+                            <p:inputText id="nome" size="40" value="#{contato.contato.nome}"
+                                         onkeyup="this.value = this.value.toUpperCase()" required="true"
+                                         requiredMessage="O campo [Nome] é obrigatório."/>
+							<h:outputLabel for="email" value="Email:"/>
+							<p:inputText id="email" size="40" value="#{contato.contato.email}"
+                                         onkeyup="this.value = this.value.toUpperCase()" required="true"
+                                         requiredMessage="O campo [Nome] é obrigatório."/>
+
+                            <p:panel>
+                                <p:commandButton value="Salvar" action="#{contato.addContato()}"
+                                                 image="ui-icon ui-icon-disk" update="@form"/>
+                                <p:commandButton value="Cancelar" actionListener="#{contato.limpaContato()}" 
+                                                 image="ui-icon ui-icon-close" update="@form"/>
+                            </p:panel>
+
+                        </h:panelGrid>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
+
+            <h:form id="formtable">
+                <p:growl id="msg1"/>
+                <p:dataTable id="idTabela" var="contato" value="#{contato.contato}"
+                             paginator="true" rows="3" emptyMessage="Nenhum Leilão Encontrado"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
+                    <f:facet name="header">Lista de Contatos</f:facet>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Cliente"/>
+                        </f:facet>
+                        <h:outputText value="#{contato.idCliente}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Sequencia"/>
+                        </f:facet>
+                        <h:outputText value="#{contato.sequencia}"/>
+                    </p:column>
+					<p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nome"/>
+                        </f:facet>
+                        <h:outputText value="#{contato.nome}"/>
+                    </p:column>
+					<p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Email"/>
+                        </f:facet>
+                        <h:outputText value="#{contato.email}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ações"/>
+                        </f:facet>
+                        <p:commandButton value="Editar" image="ui-icon ui-icon-pencil"
+                                         process="@this" update=":tbv1:formLeilao">
+                            <f:setPropertyActionListener target="#{contato.contato}"
+                                                         value="#{contato}"/>
+                        </p:commandButton>
+                        <p:commandButton value="Encerrar" action="#{contato.deleteLeilao()}"
+                                         image="ui-icon ui-icon-close" update="@form">
+                            <f:setPropertyActionListener target="#{contato.contato}"
+                                                         value="#{contato}"/>
+                        </p:commandButton>
+
+                    </p:column>
+                </p:dataTable>
+            </h:form> 
+        </p:fieldset>
+    </ui:define>
+</ui:composition>

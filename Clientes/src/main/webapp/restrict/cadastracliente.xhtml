@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../resources/main.xhtml">
+
+    <ui:define name="tarefas">
+        
+        <p:fieldset legend="Cliente">
+            <h:form id="formtable">
+                <p:growl id="msg1"/>
+                <p:dataTable id="idTabela" var="clienteDAO" value="#{cliente.clientes}"
+                             paginator="true" rows="3" emptyMessage="Nenhum Cliente Encontrado"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
+                    <f:facet name="header">Lista de Clientes</f:facet>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Cliente"/>
+                        </f:facet>
+                        <h:outputText value="#{cliente.nome}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Endereco"/>
+                        </f:facet>
+                        <h:outputText value="#{cliente.endereco}"/>
+                    </p:column>
+					<p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Bairro"/>
+                        </f:facet>
+                        <h:outputText value="#{cliente.bairro}"/>
+                    </p:column>
+					<p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Bairro"/>
+                        </f:facet>
+                        <h:outputText value="#{cliente.bairro}"/>
+                    </p:column>
+					<p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Cidade"/>
+                        </f:facet>
+                        <h:outputText value="#{cliente.cidade}"/>
+                    </p:column>
+					<p:column>
+                        <f:facet name="header">
+                            <h:outputText value="UF"/>
+                        </f:facet>
+                        <h:outputText value="#{cliente.uf}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form> 
+        </p:fieldset>
+
+        <p:fieldset legend="Cadastrar">
+            <p:tabView id="tbv1" dynamic="true" cache="true">
+                <p:tab title="Faça seu Lance">
+                    <h:form prependId="false" id="formLance">
+                        <p:growl id="msg0"/>
+                        <h:panelGrid columns="1" cellpadding="10" styleClass="panelGrid" id="grid0">
+                            <h:inputHidden id="id" value="#{cliente.lance.idLance}"/> 
+                            <h:outputLabel for="nome" value="Nome:"/>
+                            <p:inputText id="nome" size="50" value="#{cliente.cliente.nome}"
+                                         onkeyup="this.value = this.value.toUpperCase()" required="true"
+                                         requiredMessage="O campo [Nome] é obrigatório."/>
+                            <h:outputLabel for="endereco" value="Endereco"/>
+                            <p:inputText id="endereco" size="50" value="#{cliente.cliente.endereco}"
+                                         onkeyup="this.value = this.value.toUpperCase()" required="true"
+                                         requiredMessage="O campo [Nome] é obrigatório."/>
+							<h:outputLabel for="bairro" value="Bairro"/>
+                            <p:inputText id="bairro" size="50" value="#{cliente.cliente.bairro}"
+                                         onkeyup="this.value = this.value.toUpperCase()" required="true"
+                                         requiredMessage="O campo [Nome] é obrigatório."/>
+							 <h:outputLabel for="cidade" value="Cidade"/>
+                            <p:inputText id="cidade" size="50" value="#{cliente.cliente.cidade}"
+                                         onkeyup="this.value = this.value.toUpperCase()" required="true"
+                                         requiredMessage="O campo [Nome] é obrigatório."/>
+							<h:outputLabel for="uf" value="UF"/>
+                            <p:inputText id="UF" size="50" value="#{cliente.cliente.uf}"
+                                         onkeyup="this.value = this.value.toUpperCase()" required="true"
+                                         requiredMessage="O campo [Nome] é obrigatório."/>
+                            <p:panel>
+                                <p:commandButton value="Salvar" action="#{cliente.addCliente()}"
+                                                 image="ui-icon ui-icon-disk" update="@form"/>
+                                <p:commandButton value="Cancelar" actionListener="#{cliente.limpCliente()}" 
+                                                 image="ui-icon ui-icon-close" update="@form"/>
+                            </p:panel>
+                        </h:panelGrid>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
+        </p:fieldset>
+        
+    </ui:define>
+</ui:composition>
